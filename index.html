@@ -415,12 +415,15 @@
 
             scenarioBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    // Primeiro, redefine todos os botões para o estado inativo (branco)
                     scenarioBtns.forEach(b => {
                         b.classList.remove('bg-teal-600', 'text-white');
                         b.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-300');
                     });
-                    btn.classList.add('bg-teal-600', 'text-white');
+                    
+                    // Em seguida, aplica o estado ativo (verde) ao botão que foi clicado
                     btn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+                    btn.classList.add('bg-teal-600', 'text-white');
                     
                     const scenario = btn.dataset.scenario;
                     scenarioTitle.textContent = scenarioData[scenario].title;
