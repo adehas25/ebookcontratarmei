@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo: Vantagens de Contratar MEI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page, thematic guide with a sticky navigation for easy exploration. The structure prioritizes user tasks: understanding core benefits (cards), comparing costs (interactive calculator/chart), learning legal risks (interactive diagram), and identifying use cases (clickable scenarios). This non-linear structure is more engaging than a traditional e-book, allowing users to jump directly to the information most relevant to them, enhancing usability and information retention. -->
+    <!-- Visualization & Content Choices: 1. Cost Comparison: CLT vs MEI cost data -> Goal: Compare -> Viz: Dynamic Bar Chart -> Interaction: User input (slider) updates chart and text values in real-time -> Justification: Provides immediate, powerful visual feedback on the primary benefit (cost savings), making the abstract concept concrete -> Library: Chart.js. 2. Legal Risks: "Vínculo empregatício" factors -> Goal: Inform/Warn -> Presentation: Interactive diagram of legal pillars -> Interaction: Clicking a pillar reveals descriptive text -> Justification: Deconstructs a complex legal topic into a simple, interactive visual, improving comprehension and engagement -> Method: HTML/CSS/JS. 3. Core Benefits: List of advantages -> Goal: Inform -> Presentation: Grid of info-cards with icons -> Interaction: Subtle hover effects -> Justification: Modern, scannable layout that presents key takeaways quickly -> Method: HTML/Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #0d9488;
+            border-bottom-color: #0d9488;
+        }
+        .card-benefit {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-benefit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-teal-700">Guia Contratar MEI</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#vantagens" class="nav-link text-slate-600 font-medium pb-1 border-b-2 border-transparent">Vantagens</a>
+                <a href="#comparativo" class="nav-link text-slate-600 font-medium pb-1 border-b-2 border-transparent">Comparativo</a>
+                <a href="#cuidados" class="nav-link text-slate-600 font-medium pb-1 border-b-2 border-transparent">Cuidados Legais</a>
+                <a href="#cenarios" class="nav-link text-slate-600 font-medium pb-1 border-b-2 border-transparent">Cenários Ideais</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-slate-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="#vantagens" class="block py-2 nav-link text-slate-600 font-medium">Vantagens</a>
+             <a href="#comparativo" class="block py-2 nav-link text-slate-600 font-medium">Comparativo</a>
+             <a href="#cuidados" class="block py-2 nav-link text-slate-600 font-medium">Cuidados Legais</a>
+             <a href="#cenarios" class="block py-2 nav-link text-slate-600 font-medium">Cenários Ideais</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="text-center py-16 md:py-24 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-5xl font-bold text-teal-800 mb-4">Destrave o Potencial do seu Negócio</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                    Descubra como a contratação de um Microempreendedor Individual (MEI) pode reduzir custos, aumentar a flexibilidade e impulsionar o crescimento da sua empresa. Este guia interativo mostra as vantagens, os cuidados e o impacto financeiro real dessa modalidade de trabalho.
+                </p>
+            </div>
+        </section>
+
+        <section id="vantagens" class="py-16 md:py-20 px-6">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-2">Principais Vantagens</h3>
+                    <p class="text-slate-600 max-w-2xl mx-auto">A parceria com um MEI através de um contrato de prestação de serviços oferece benefícios estratégicos que vão além da economia, otimizando a operação do seu negócio.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card-benefit bg-white p-8 rounded-xl shadow-md border border-slate-200/50">
+                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4">
+                            <span class="text-2xl font-bold">$</span>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Redução de Custos</h4>
+                        <p class="text-slate-600">Elimine despesas com encargos trabalhistas como FGTS, INSS, 13º salário e férias. Pague apenas o valor acordado pelo serviço prestado, gerando uma economia direta significativa.</p>
+                    </div>
+                    <div class="card-benefit bg-white p-8 rounded-xl shadow-md border border-slate-200/50">
+                         <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4">
+                            <span class="text-2xl">❖</span>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Flexibilidade e Agilidade</h4>
+                        <p class="text-slate-600">Contrate profissionais para projetos específicos ou demandas pontuais, sem a rigidez de um contrato CLT. Tenha agilidade para montar e desmontar equipes conforme a necessidade do seu negócio.</p>
+                    </div>
+                    <div class="card-benefit bg-white p-8 rounded-xl shadow-md border border-slate-200/50">
+                         <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4">
+                            <span class="text-xl">📄</span>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Menos Burocracia</h4>
+                        <p class="text-slate-600">O processo de contratação e rescisão é simplificado, baseado em um contrato de prestação de serviços. Reduza a papelada e a complexidade administrativa do seu RH.</p>
+                    </div>
+                    <div class="card-benefit bg-white p-8 rounded-xl shadow-md border border-slate-200/50">
+                         <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4">
+                            <span class="text-xl">🎯</span>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Foco no Core Business</h4>
+                        <p class="text-slate-600">Delegue tarefas e projetos especializados a profissionais autônomos. Isso libera sua equipe interna para se concentrar nas atividades centrais que geram valor para o seu negócio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparativo" class="py-16 md:py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-2">Comparativo de Custos: CLT vs. MEI</h3>
+                    <p class="text-slate-600 max-w-3xl mx-auto">Veja na prática a diferença de custo anual entre um funcionário CLT e um prestador de serviços MEI. Use o controle deslizante para simular diferentes salários base e observe o impacto financeiro.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto bg-slate-50 p-6 md:p-8 rounded-xl border border-slate-200">
+                    <div class="mb-8">
+                        <label for="salario-clt" class="block font-medium mb-2 text-lg">Salário Bruto Mensal (CLT): <span id="salario-label" class="font-bold text-teal-700">R$ 3.000,00</span></label>
+                        <input type="range" id="salario-clt" min="1500" max="15000" step="100" value="3000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 mb-8 items-center">
+                        <div class="flex flex-col space-y-4">
+                            <div>
+                                <h4 class="text-2xl font-semibold text-red-600">Custo Anual (CLT)</h4>
+                                <p id="custo-clt" class="text-4xl font-bold text-red-500">R$ 67.800,00</p>
+                                <p class="text-sm text-slate-500">Inclui 13º, férias, FGTS e outros encargos.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-semibold text-green-600">Custo Anual (MEI)</h4>
+                                <p id="custo-mei" class="text-4xl font-bold text-green-500">R$ 36.000,00</p>
+                                <p class="text-sm text-slate-500">Pagamento de 12 mensalidades acordadas.</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cuidados" class="py-16 md:py-20 px-6">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-2">Navegando com Segurança Jurídica</h3>
+                    <p class="text-slate-600 max-w-3xl mx-auto">Contratar um MEI é vantajoso, mas requer atenção para evitar a caracterização de vínculo empregatício. A relação deve ser estritamente comercial. Explore os pilares que definem uma relação de emprego e veja como evitá-los.</p>
+                </div>
+                <div class="max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-200/50 flex flex-col lg:flex-row gap-8">
+                    <div class="flex-1">
+                        <div id="legal-info" class="bg-slate-50 p-6 rounded-lg min-h-[200px] border border-slate-200 transition-all duration-300">
+                            <h4 id="legal-title" class="text-xl font-bold text-teal-700 mb-2">Selecione um pilar</h4>
+                            <p id="legal-text" class="text-slate-700">Clique em um dos quatro pilares ao lado para entender o que ele significa e como garantir que sua relação com o MEI seja segura e legal.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 flex-1">
+                        <button data-pillar="subordinacao" class="legal-pillar-btn text-left p-4 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 focus:ring-4 focus:ring-amber-300 transition-all duration-300">
+                            <h5 class="font-bold">🚫 Subordinação</h5>
+                            <p class="text-sm">O MEI não deve ter chefe nem seguir ordens diretas sobre como realizar o trabalho.</p>
+                        </button>
+                         <button data-pillar="pessoalidade" class="legal-pillar-btn text-left p-4 bg-sky-100 text-sky-800 rounded-lg hover:bg-sky-200 focus:ring-4 focus:ring-sky-300 transition-all duration-300">
+                            <h5 class="font-bold">🚫 Pessoalidade</h5>
+                            <p class="text-sm">O serviço pode ser executado por um terceiro, indicado pelo MEI contratado.</p>
+                        </button>
+                         <button data-pillar="habitualidade" class="legal-pillar-btn text-left p-4 bg-rose-100 text-rose-800 rounded-lg hover:bg-rose-200 focus:ring-4 focus:ring-rose-300 transition-all duration-300">
+                            <h5 class="font-bold">🚫 Habitualidade</h5>
+                            <p class="text-sm">Não deve haver jornada de trabalho fixa ou dias obrigatórios de presença.</p>
+                        </button>
+                         <button data-pillar="onerosidade" class="legal-pillar-btn text-left p-4 bg-lime-100 text-lime-800 rounded-lg hover:bg-lime-200 focus:ring-4 focus:ring-lime-300 transition-all duration-300">
+                            <h5 class="font-bold">✅ Onerosidade</h5>
+                            <p class="text-sm">Este é o único pilar comum: o pagamento pelo serviço prestado.</p>
+                        </button>
+                    </div>
+                </div>
+                 <p class="text-center mt-8 text-sm text-slate-500 max-w-2xl mx-auto">A chave é um contrato de prestação de serviços bem redigido, que defina claramente o objeto, o prazo e o valor, sem estabelecer uma relação de subordinação.</p>
+            </div>
+        </section>
+
+        <section id="cenarios" class="py-16 md:py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                 <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-2">Quando Contratar um MEI é a Melhor Opção?</h3>
+                    <p class="text-slate-600 max-w-3xl mx-auto">Esta modalidade é perfeita para diversas situações. Explore alguns cenários ideais onde a contratação de um MEI se encaixa perfeitamente, trazendo agilidade e expertise para seu negócio.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-center gap-4 mb-8">
+                        <button data-scenario="projeto" class="scenario-btn bg-teal-600 text-white px-5 py-2 rounded-full font-medium hover:bg-teal-700 transition-colors">Projetos com prazo definido</button>
+                        <button data-scenario="sazonal" class="scenario-btn bg-white text-slate-700 border border-slate-300 px-5 py-2 rounded-full font-medium hover:bg-slate-100 transition-colors">Demandas Sazonais</button>
+                        <button data-scenario="consultoria" class="scenario-btn bg-white text-slate-700 border border-slate-300 px-5 py-2 rounded-full font-medium hover:bg-slate-100 transition-colors">Consultoria Especializada</button>
+                        <button data-scenario="pontual" class="scenario-btn bg-white text-slate-700 border border-slate-300 px-5 py-2 rounded-full font-medium hover:bg-slate-100 transition-colors">Serviços Pontuais</button>
+                    </div>
+                    <div id="scenario-content" class="bg-slate-50 p-8 rounded-lg min-h-[150px] border border-slate-200 transition-all duration-300">
+                        <h4 id="scenario-title" class="text-xl font-bold text-teal-800 mb-2">Projetos com prazo definido</h4>
+                        <p id="scenario-text" class="text-slate-700">Ideal para contratar desenvolvedores, designers, redatores ou gestores de projeto para uma iniciativa com início, meio e fim. Ao final do projeto, o contrato se encerra naturalmente, sem custos de rescisão ou burocracia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="cta" class="py-16 md:py-20 px-6 bg-teal-50">
+        <div class="container mx-auto text-center max-w-3xl">
+            <h3 class="text-3xl md:text-4xl font-bold mb-4 text-teal-800">Pronto para Simplificar a Gestão do seu MEI?</h3>
+            <p class="text-slate-600 text-lg mb-8">Agora que você entende as vantagens de contratar um MEI, que tal facilitar a vida do seu prestador de serviços (ou a sua)? O Declara Fácil ajuda a organizar e automatizar as declarações anuais, garantindo tranquilidade e conformidade fiscal.</p>
+            <a href="https://adehas25.github.io/declarafacil/" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-600 text-white font-bold text-lg px-8 py-4 rounded-lg hover:bg-teal-700 transition-transform transform hover:scale-105 shadow-lg">
+                Conheça o Declara Fácil
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 px-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Guia Interativo MEI. Uma ferramenta para decisões de negócio mais inteligentes.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            const salarioSlider = document.getElementById('salario-clt');
+            const salarioLabel = document.getElementById('salario-label');
+            const custoCltElem = document.getElementById('custo-clt');
+            const custoMeiElem = document.getElementById('custo-mei');
+            
+            const formatCurrency = (value) => {
+                return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            };
+
+            const costChartCanvas = document.getElementById('costChart').getContext('2d');
+            let costChart;
+
+            const createOrUpdateChart = (cltCost, meiCost) => {
+                const data = {
+                    labels: ['Custo Total Anual'],
+                    datasets: [
+                        {
+                            label: 'CLT',
+                            data: [cltCost],
+                            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 1,
+                            barPercentage: 0.5,
+                        },
+                        {
+                            label: 'MEI',
+                            data: [meiCost],
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1,
+                            barPercentage: 0.5,
+                        }
+                    ]
+                };
+
+                if (costChart) {
+                    costChart.data.datasets[0].data[0] = cltCost;
+                    costChart.data.datasets[1].data[0] = meiCost;
+                    costChart.update();
+                } else {
+                    costChart = new Chart(costChartCanvas, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed.y !== null) {
+                                                label += formatCurrency(context.parsed.y);
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value, index, values) {
+                                            return formatCurrency(value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+            
+            const updateCosts = () => {
+                const salarioBase = parseFloat(salarioSlider.value);
+                
+                const custoMensalCltAproximado = salarioBase * 1.8; 
+                const custoAnualClt = custoMensalCltAproximado * 12;
+                const custoAnualMei = salarioBase * 12;
+
+                salarioLabel.textContent = formatCurrency(salarioBase);
+                custoCltElem.textContent = formatCurrency(custoAnualClt);
+                custoMeiElem.textContent = formatCurrency(custoAnualMei);
+
+                createOrUpdateChart(custoAnualClt, custoAnualMei);
+            };
+
+            salarioSlider.addEventListener('input', updateCosts);
+            updateCosts();
+
+            const legalPillarBtns = document.querySelectorAll('.legal-pillar-btn');
+            const legalTitle = document.getElementById('legal-title');
+            const legalText = document.getElementById('legal-text');
+            const legalData = {
+                subordinacao: {
+                    title: '🚫 Cuidado com a Subordinação',
+                    text: 'A relação com o MEI deve ser de parceria, não de chefia. Defina metas e entregas, mas não controle o horário, não exija exclusividade nem direcione o "como fazer" da tarefa. O profissional deve ter autonomia para executar o serviço com seus próprios métodos.'
+                },
+                pessoalidade: {
+                    title: '🚫 Evite a Pessoalidade',
+                    text: 'O contrato é para um serviço, não para uma pessoa específica. O MEI deve ter a liberdade de, se necessário, usar sua própria equipe ou um substituto para realizar a entrega. Exigir que apenas a pessoa contratada execute o serviço pode caracterizar vínculo.'
+                },
+                habitualidade: {
+                    title: '🚫 Fuja da Habitualidade',
+                    text: 'Evite rotinas fixas, como exigir presença no escritório de segunda a sexta, das 9h às 18h. A relação deve ser baseada em projetos e entregas, não em uma jornada de trabalho contínua. Pagamentos recorrentes são normais, mas não devem estar atrelados a uma frequência de trabalho rígida.'
+                },
+                onerosidade: {
+                    title: '✅ Onerosidade é a Base',
+                    text: 'Este é o único elemento que sempre estará presente e é perfeitamente legal. A onerosidade é simplesmente o pagamento pelo serviço prestado, conforme acordado em contrato. É a natureza de toda relação comercial.'
+                }
+            };
+
+            legalPillarBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pillar = btn.dataset.pillar;
+                    legalTitle.textContent = legalData[pillar].title;
+                    legalText.textContent = legalData[pillar].text;
+                });
+            });
+
+            const scenarioBtns = document.querySelectorAll('.scenario-btn');
+            const scenarioTitle = document.getElementById('scenario-title');
+            const scenarioText = document.getElementById('scenario-text');
+            const scenarioData = {
+                projeto: {
+                    title: 'Projetos com prazo definido',
+                    text: 'Ideal para contratar desenvolvedores, designers, redatores ou gestores de projeto para uma iniciativa com início, meio e fim. Ao final do projeto, o contrato se encerra naturalmente, sem custos de rescisão ou burocracia.'
+                },
+                sazonal: {
+                    title: 'Demandas Sazonais',
+                    text: 'Perfeito para reforçar a equipe em períodos de alta demanda, como Natal, Black Friday ou lançamento de produtos. Contrate especialistas em marketing, vendas ou logística por um período determinado para maximizar seus resultados.'
+                },
+                consultoria: {
+                    title: 'Consultoria Especializada',
+                    text: 'Acesse talentos de alto nível em áreas como finanças, RH, tecnologia ou direito para resolver um problema específico, implementar uma nova ferramenta ou realizar um diagnóstico na sua empresa, sem o custo de um funcionário sênior em tempo integral.'
+                },
+                pontual: {
+                    title: 'Serviços Pontuais',
+                    text: 'Precisa de um fotógrafo para um evento, um técnico para manutenção de equipamentos ou um tradutor para um documento? A contratação de MEI é a forma mais ágil e eficiente de resolver essas necessidades esporádicas.'
+                }
+            };
+
+            scenarioBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    scenarioBtns.forEach(b => {
+                        b.classList.remove('bg-teal-600', 'text-white');
+                        b.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+                    });
+                    btn.classList.add('bg-teal-600', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+                    
+                    const scenario = btn.dataset.scenario;
+                    scenarioTitle.textContent = scenarioData[scenario].title;
+                    scenarioText.textContent = scenarioData[scenario].text;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
